@@ -18,8 +18,15 @@ import springfox.documentation.spring.web.plugins.Docket;
 /**
  * 配置类，注册web层相关组件
  */
+
+/*
+    通过使用@Configuration注解，我们告诉Spring容器这个类是一个配置类，并且应当被加载和处理。
+    定义Bean：配置类通常包含一些用于创建和配置Bean的方法。这些方法使用@Bean注解来定义Bean，并且在Spring容器启动时被调用。
+             通过@Configuration注解，我们可以将这些方法标识为Bean定义方法，使它们成为Spring应用程序上下文中的Bean。
+
+ */
 @Configuration
-@Slf4j
+@Slf4j  // 日志注解
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
@@ -43,6 +50,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Bean
     public Docket docket() {
+        log.info("开始生成接口文档");
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("苍穹外卖项目接口文档")
                 .version("2.0")
@@ -62,6 +70,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * @param registry
      */
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        log.info("启动静态资源映射");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
